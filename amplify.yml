@@ -1,18 +1,35 @@
 version: 1
+
 frontend:
   phases:
     preBuild:
       commands:
-        - nvm install 18
-        - nvm use 18
-        - npm ci
+        - echo "Setting Node version"
+        - nvm install 20
+        - nvm use 20
+
+        - echo "Installing npm 11"
+        - npm install -g npm@11
+
+        - node -v
+        - npm -v
+
+        - echo "Cleaning environment"
+        - rm -rf node_modules
+        - npm cache clean --force
+
+        - echo "Installing dependencies"
+        - npm install
+
     build:
       commands:
         - npm run build
+
   artifacts:
-    baseDirectory: build
+    baseDirectory: dist
     files:
       - '**/*'
+
   cache:
     paths:
       - node_modules/**/*
